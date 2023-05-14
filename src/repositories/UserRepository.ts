@@ -1,6 +1,7 @@
 import { User } from './../model/user';
 import { RepositoryError } from '../errors/RepositoryError';
 import { UserParams } from '../types/User';
+import { Crypt } from '../core/utils/crypt';
 
 export class UserRepositoryClass {
   async create(props: UserParams) {
@@ -27,12 +28,31 @@ export class UserRepositoryClass {
     }
   }
 
+  async findByEmail(email: string) {
+    try {
+      const userFound = await User.findOne({ email });
+
+      if (!userFound) {
+        return 'Email not exists';
+      }
+
+      return userFound;
+    } catch (err) {
+      throw new RepositoryError('findById:user', err);
+    }
+  }
+
   async findByCredentials(email: string, password: string) {
     try {
-      const userFound = await User.findOne({
-        email: email,
-        password: password,
-      });
+      const userFound = await this.findByEmail(email);
+
+      if (userFound === 'Email not exists') return userFound;
+
+      const validCredentials = await Crypt.compare(password, userFound.password as string)
+
+      if (!validCredentials) {
+        return 'Password invalid';
+      }
 
       return userFound;
     } catch (err) {
