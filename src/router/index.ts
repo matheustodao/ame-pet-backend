@@ -3,6 +3,8 @@ import { createUser } from '../useCases/User/create';
 import { listUser } from '../useCases/User/list';
 import { loginUser } from '../useCases/User/login';
 import { createOng } from '../useCases/Ong/create';
+import { createIncident } from '../useCases/Incident/create';
+import { getByIdIncident } from '../useCases/Incident/getById';
 
 const router = Router();
 
@@ -12,5 +14,8 @@ router.get('/user', listUser)
 router.post('/login', loginUser)
 
 router.post('/ong', createOng)
+
+router.post('/incident', createIncident)
+router.get('/incident/:id', getByIdIncident)
 
 export { router };
