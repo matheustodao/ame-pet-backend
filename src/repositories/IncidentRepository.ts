@@ -1,6 +1,6 @@
 import { User } from './../model/user';
 import { RepositoryError } from '../errors/RepositoryError';
-import { IncidentParams } from '../types/Incident';
+import { IncidentParams, IncidentStatus } from '../types/Incident';
 import { Incident } from '../model/incident';
 
 export class IncidentRepositoryClass {
@@ -29,6 +29,18 @@ export class IncidentRepositoryClass {
       return userExists;
     } catch (err) {
       throw new RepositoryError('show:incident', err);
+    }
+  }
+
+  async updateStatus(incidentId: string, status: IncidentStatus) {
+    try {
+      const updated = await Incident.findOneAndUpdate({
+        _id: incidentId
+      }, { status }, { new: true })
+
+      return updated;
+    } catch (err) {
+      throw new RepositoryError('updateStatus:incident', err);
     }
   }
 }

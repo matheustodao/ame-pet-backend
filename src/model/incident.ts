@@ -7,6 +7,13 @@ export const Incident = model('Incident', new Schema({
     enum: ['domestico', 'gado', 'silvestre', 'selvagens'],
   },
 
+  status: {
+    type: String,
+    required: true,
+    enum: ['ongoing', 'canceled', 'done'],
+    default: 'ongoing'
+  },
+
   longitude_latitude: {
     type: String,
     required: true,

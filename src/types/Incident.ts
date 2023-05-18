@@ -1,5 +1,6 @@
 type CategoryAnimal = 'doméstico' | 'gado' | 'silvestre' | 'selvagens';
 type AnimalSize = 'mini' | 'small' | 'medio' | 'grande' | 'gigante';
+export type IncidentStatus = 'ongoing' | 'canceled' | 'done';
 
 export interface IncidentParams {
   category_animal: CategoryAnimal,
@@ -15,6 +16,8 @@ export interface IncidentParams {
   ong: string,
 
   longitude_latitude: string,
+
+  status: IncidentStatus
 }
 
 export interface IncidentParamsApi extends Omit<IncidentParams, 'animal_lost' | 'adopt' | 'user' | 'ong'>{

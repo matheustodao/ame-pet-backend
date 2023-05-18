@@ -11,6 +11,7 @@ export async function createIncident(req: Request, res: Response) {
     category_animal,
     ongId,
     userId,
+    status
   } = req.body as IncidentParamsApi;
 
   const ong = await IncidentRepository.create({
@@ -19,6 +20,7 @@ export async function createIncident(req: Request, res: Response) {
     longitude_latitude,
     animal_size,
     category_animal,
+    status,
     ong: ongId,
     user: userId,
   });
