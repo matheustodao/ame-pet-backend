@@ -2,6 +2,7 @@ import 'dotenv/config';
 import 'express-async-errors';
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import { router } from './router';
 
 const app = express();
@@ -20,6 +21,7 @@ mongoose.connect(dbInfo.urlDev)
   .then(() => {
     const PORT = process.env.PORT ?? 3001;
 
+    app.use(cors())
     app.use(express.json());
     app.use(router)
 
