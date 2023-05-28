@@ -37,7 +37,7 @@ export async function getNearbyClinics(req: Request, res: Response) {
     const { distanceLength } = await distanceMatrix(placeLocation, clientLocation);
 
     return {
-      id: place.id,
+      id: place.place_id,
       name: place.name,
       images: place.photos,
       rating: place.rating,
