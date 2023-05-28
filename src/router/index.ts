@@ -9,6 +9,7 @@ import { changeStatusIncident } from '../useCases/Incident/changeStatus';
 import { AuthMiddleware } from '../middleware/authMiddleware';
 import axios from 'axios';
 import { getNearbyClinics } from '../useCases/maps/places/getNearbyClinics';
+import { getPlaceDetails } from '../useCases/maps/places/getPlaceDetails';
 
 const router = Router();
 
@@ -22,7 +23,8 @@ router.use('/incident', AuthMiddleware,
 )
 
 router.use('/maps', AuthMiddleware,
-  router.get('/nearby/clinics', getNearbyClinics)
+  router.get('/nearby/clinics', getNearbyClinics),
+  router.get('/place/:place_id', getPlaceDetails)
 )
 
 router.post('/login', loginUser)
