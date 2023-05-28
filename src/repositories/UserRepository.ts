@@ -1,11 +1,19 @@
 import { User } from './../model/user';
 import { RepositoryError } from '../errors/RepositoryError';
-import { UserParams } from '../types/User';
+import { UserParams, UserStoreParams } from '../types/User';
 import { Crypt } from '../core/utils/crypt';
 
+type FindByCredentialsResponse = UserParams | null;
+
 export class UserRepositoryClass {
-  async create(props: UserParams) {
+  async create(props: UserStoreParams): Promise<UserParams | null> {
     try {
+      const emailAlreadyExists = await this.findByEmail(props.email);
+
+      if (emailAlreadyExists) {
+        return null;
+      }
+
       const user = await User.create({
         name: props.name,
         email: props.email,
@@ -28,12 +36,12 @@ export class UserRepositoryClass {
     }
   }
 
-  async findByEmail(email: string) {
+  async findByEmail(email: string): Promise<UserParams | null> {
     try {
       const userFound = await User.findOne({ email });
 
       if (!userFound) {
-        return 'Email not exists';
+        return null;
       }
 
       return userFound;
@@ -42,16 +50,16 @@ export class UserRepositoryClass {
     }
   }
 
-  async findByCredentials(email: string, password: string) {
+  async findByCredentials(email: string, password: string): Promise<FindByCredentialsResponse> {
     try {
       const userFound = await this.findByEmail(email);
 
-      if (userFound === 'Email not exists') return userFound;
+      if (userFound === null) return null;
 
       const validCredentials = await Crypt.compare(password, userFound.password as string)
 
       if (!validCredentials) {
-        return 'Password invalid';
+        return null;
       }
 
       return userFound;
