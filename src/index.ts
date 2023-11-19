@@ -1,18 +1,15 @@
-import 'dotenv/config';
-import 'express-async-errors';
-import express from 'express';
-import mongoose from 'mongoose';
 import cors from 'cors';
-import { router } from './router';
+import 'dotenv/config';
+import express from 'express';
+import 'express-async-errors';
+import mongoose from 'mongoose';
 import ngrok from 'ngrok';
+import { router } from './router';
 
 const app = express();
 
-const dbUser = process.env.DB_USER;
-const dbPassword = process.env.DB_PASSWORD;
-
 const dbInfo = {
-  atlas: `mongodb+srv://${dbUser}:${dbPassword}@cluster0.5rmv5q5.mongodb.net`,
+  atlas: process.env.MONGO_UR ?? '',
   urlDev: 'mongodb://localhost:27017'
 }
 
