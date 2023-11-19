@@ -42,7 +42,8 @@ export async function getNearbyClinics(req: Request, res: Response) {
       images: place.photos,
       rating: place.rating,
       location: placeLocation,
-      distanceLength
+      distanceLength,
+      isOpen: place?.opening_hours?.open_now
     }
   }))
 

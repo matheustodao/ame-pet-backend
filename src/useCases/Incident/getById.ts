@@ -8,8 +8,8 @@ export async function getByIdIncident(req: Request, res: Response) {
     return res.status(400).json({ error: 'Missing Id' })
   }
 
-  const ong = await IncidentRepository.show(id);
+  const incident = await IncidentRepository.show(id);
 
-  res.json(ong);
+  res.json(incident);
 }
 

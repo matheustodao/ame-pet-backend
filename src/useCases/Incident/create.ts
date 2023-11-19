@@ -14,7 +14,7 @@ export async function createIncident(req: Request, res: Response) {
     status
   } = req.body as IncidentParamsApi;
 
-  const ong = await IncidentRepository.create({
+  const incidentCreated = await IncidentRepository.create({
     adopt: adopt === '1' ? true : false,
     animal_lost: animal_lost === '1' ? true : false,
     longitude_latitude,
@@ -25,6 +25,8 @@ export async function createIncident(req: Request, res: Response) {
     user: userId,
   });
 
-  res.json(ong);
+  const incident = await IncidentRepository.findByUserId(userId);
+
+  res.json(incident );
 }
 

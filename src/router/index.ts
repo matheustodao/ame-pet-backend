@@ -10,25 +10,29 @@ import { AuthMiddleware } from '../middleware/authMiddleware';
 import axios from 'axios';
 import { getNearbyClinics } from '../useCases/maps/places/getNearbyClinics';
 import { getPlaceDetails } from '../useCases/maps/places/getPlaceDetails';
+import { RoutesRepository } from '../repositories/RoutesRepository';
+import { indexOng } from '../useCases/Ong';
+import { getIncidentByUserId } from '../useCases/Incident/getIncidentByUserId';
 
 const router = Router();
 
+router.get('/', (req, res) => res.json({ hello: 'world' }))
+
 router.post('/user', createUser);
-router.get('/user', AuthMiddleware, listUser);
+router.get('/user', listUser);
 
-router.use('/incident', AuthMiddleware,
-  router.post('/', createIncident),
-  router.get('/:id', getByIdIncident),
-  router.patch('/:id', changeStatusIncident),
-)
+router.get('/maps/nearby/clinics', getNearbyClinics),
+router.get('/maps/place/:place_id', getPlaceDetails),
+router.get('/maps/route', RoutesRepository.show)
 
-router.use('/maps', AuthMiddleware,
-  router.get('/nearby/clinics', getNearbyClinics),
-  router.get('/place/:place_id', getPlaceDetails)
-)
+router.post('/ong', createOng)
+router.get('/ong', indexOng)
 
 router.post('/login', loginUser)
 
-router.post('/ong', createOng)
+router.post('/incident', createIncident)
+router.get('/incident/:id', getByIdIncident)
+router.get('/incident/user/:id', getIncidentByUserId)
+router.patch('/incident/:id', changeStatusIncident)
 
 export { router };

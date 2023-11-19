@@ -21,9 +21,19 @@ export class OngRepositoryClass {
 
   async show(ongId: string) {
     try {
-      const userExists = await Ong.findById(ongId);
+      const ongExists = await Ong.findById(ongId);
 
-      return userExists;
+      return ongExists;
+    } catch (err) {
+      throw new RepositoryError('show:ong', err);
+    }
+  }
+
+  async index() {
+    try {
+      const ong = await Ong.find()
+
+      return ong;
     } catch (err) {
       throw new RepositoryError('show:ong', err);
     }

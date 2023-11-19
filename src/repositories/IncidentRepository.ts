@@ -32,6 +32,24 @@ export class IncidentRepositoryClass {
     }
   }
 
+  async findByUserId(userId: string) {
+    try {
+      const multiplesIncidents = await Incident.find()
+        .where({
+          user: userId,
+          status: 'ongoing'
+        })
+        .populate('user')
+        .populate('ong');
+
+      const recentIncidentOngoing = multiplesIncidents[multiplesIncidents?.length - 1];
+
+      return recentIncidentOngoing;
+    } catch (err) {
+      throw new RepositoryError('get:incident by user id', err);
+    }
+  }
+
   async updateStatus(incidentId: string, status: IncidentStatus) {
     try {
       const updated = await Incident.findOneAndUpdate({
