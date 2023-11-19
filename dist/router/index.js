@@ -1,0 +1,31 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.router = void 0;
+const express_1 = require("express");
+const create_1 = require("../useCases/User/create");
+const list_1 = require("../useCases/User/list");
+const login_1 = require("../useCases/User/login");
+const create_2 = require("../useCases/Ong/create");
+const create_3 = require("../useCases/Incident/create");
+const getById_1 = require("../useCases/Incident/getById");
+const changeStatus_1 = require("../useCases/Incident/changeStatus");
+const getNearbyClinics_1 = require("../useCases/maps/places/getNearbyClinics");
+const getPlaceDetails_1 = require("../useCases/maps/places/getPlaceDetails");
+const RoutesRepository_1 = require("../repositories/RoutesRepository");
+const Ong_1 = require("../useCases/Ong");
+const getIncidentByUserId_1 = require("../useCases/Incident/getIncidentByUserId");
+const router = (0, express_1.Router)();
+exports.router = router;
+router.get('/', (req, res) => res.json({ hello: 'world' }));
+router.post('/user', create_1.createUser);
+router.get('/user', list_1.listUser);
+router.get('/maps/nearby/clinics', getNearbyClinics_1.getNearbyClinics),
+    router.get('/maps/place/:place_id', getPlaceDetails_1.getPlaceDetails),
+    router.get('/maps/route', RoutesRepository_1.RoutesRepository.show);
+router.post('/ong', create_2.createOng);
+router.get('/ong', Ong_1.indexOng);
+router.post('/login', login_1.loginUser);
+router.post('/incident', create_3.createIncident);
+router.get('/incident/:id', getById_1.getByIdIncident);
+router.get('/incident/user/:id', getIncidentByUserId_1.getIncidentByUserId);
+router.patch('/incident/:id', changeStatus_1.changeStatusIncident);
