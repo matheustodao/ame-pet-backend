@@ -9,7 +9,7 @@ import { router } from './router';
 const app = express();
 
 const dbInfo = {
-  atlas: process.env.MONGO_UR ?? '',
+  atlas: process.env.MONGO_URL ?? '',
   urlDev: 'mongodb://localhost:27017'
 }
 
