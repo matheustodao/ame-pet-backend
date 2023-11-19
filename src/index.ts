@@ -16,12 +16,12 @@ mongoose.set('strictQuery', false);
 
 mongoose.connect(dbInfo.atlas)
   .then(() => {
-    const PORT = process.env.PORT ?? 3002;
+    const PORT = process.env.PORT ?? 3000;
 
     app.use(cors())
     app.use(express.json());
     app.use(router)
 
-    app.listen(PORT);
+    app.listen(PORT, () => console.log(`App started at ṕort ${PORT}`));
   })
   .catch((err) => console.error(`Mongo is failed: ${err}`))

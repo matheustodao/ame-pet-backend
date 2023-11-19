@@ -23,6 +23,6 @@ mongoose_1.default.connect(dbInfo.atlas)
     app.use((0, cors_1.default)());
     app.use(express_1.default.json());
     app.use(router_1.router);
-    app.listen(PORT);
+    app.listen(PORT, () => console.log(`App started at ṕort ${PORT}`));
 })
     .catch((err) => console.error(`Mongo is failed: ${err}`));
