@@ -38,13 +38,13 @@ export async function getNearbyClinics(req: Request, res: Response) {
 
     return {
       id: place.place_id,
+      address: place?.vicinity,
       name: place.name,
       images: place.photos,
       rating: place.rating,
       location: placeLocation,
       distanceLength,
       isOpen: place?.opening_hours?.open_now,
-      address: place?.vicinity,
     }
   }))
 
