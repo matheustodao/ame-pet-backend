@@ -43,7 +43,8 @@ export async function getNearbyClinics(req: Request, res: Response) {
       rating: place.rating,
       location: placeLocation,
       distanceLength,
-      isOpen: place?.opening_hours?.open_now
+      isOpen: place?.opening_hours?.open_now,
+      address: place?.vicinity,
     }
   }))
 
